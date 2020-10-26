@@ -47,7 +47,7 @@
     <td>{{factura.fact_nombre}}</td>
     <td>{{factura.fact_fecha}}</td>
     <td>{{factura.fact_subtotal}}</td>
-    <td>{{factura.fact_iva}}</td>
+    <td>{{factura.fact_iva}} %</td>
     <td>
     <div class="col-md-8">
     <input type="number" v-model.number="factura.fact_total" class="form-control text-right" disabled>

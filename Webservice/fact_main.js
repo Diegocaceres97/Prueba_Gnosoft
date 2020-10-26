@@ -189,13 +189,13 @@ async function final(articulo, cantidad, valor) {
     focusConfirm: false,
     preConfirm: () => {
       return [
-        (this.nombre = document.getElementById("nombre").value),
-        (this.fecha = document.getElementById("fecha").value),
+        (nombre = document.getElementById("nombre").value),
+        (fecha = document.getElementById("fecha").value),
       ];
     },
   });
 
-  if (formValuesD) {
+  if (formValuesD&&Boolean(nombre)&&Boolean(fecha)) {
     productos(nombre, fecha, articulo, cantidad, valor, 1);
     const Toast = Swal.mixin({
       toast: true,
@@ -207,13 +207,14 @@ async function final(articulo, cantidad, valor) {
       type: "success",
       title: "¡Factura agregada!",
     });
-  } else {
+   }else {
     Swal.fire({
       type: "info",
       title: "Datos incompletos",
     });
     array.length = 0;
     subtotal = 0;
+    total=0;
   }
 }
 function productos(nombre, fecha, articulo, cantidad, valor, opt) {
