@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>PRUEBA</title>
+    <title>ANGELNAILS</title>
     <!--Bootstrap css-->
     <link rel="stylesheet" href="Fachada/bootstrap/dist/css/bootstrap.min.css">
    <!--Sweet alert-->
@@ -23,6 +23,7 @@
 <div class="row">
 <div class="col">
 <button @click="btnAlta" class="btn btn-success" title="Nuevo"><i class="fas fa-plus-circle fa-2xs"></i> </button>
+<button @click="btnNP" class="btn btn-success" title="Agregar producto"><i class="fab fa-product-hunt"></i> </button>
 </div>
 <div class="col text-right">
 <h5>Total facturas: <span class="badge badge-success">{{totalFactura}}</span></h5>

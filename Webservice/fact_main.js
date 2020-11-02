@@ -1,5 +1,6 @@
 var url = "DAO/facturaDAO.php"; //Url que vamos a utilizar para enviar los datos via axios
 var url_VO = "Mediador/factura.php";
+var url_PRO = "DAO/productosDAO.php";
 var subtotal = 0;
 var total = 0;
 const array = new Array();
@@ -18,11 +19,12 @@ var appFacturas = new Vue({
     //Botones
     //Hacemos uso de SweetAlert2 para las opciones crud
     btnAlta: async function agr_pro_fac() {
+      LlenarSelect();
       const { value: formValues } = await Swal.fire({
-        title: "Compra producto",
+        title: "Venta producto",
         html:
           '<label for="articulo" class="mt-3" style="display:block">Articulo</label>' +
-          '<input id="articulo" class="mb-1 mt-1 swal2-input">' +
+          '<select id="opcion" onchange="cargarV()"> <option value="0">Escoge un articulo</option></select>' +
           '<label for="cantidad" style="display:block">Cantidad</label>' +
           '<input id="cantidad" type="number" value="1" min="1" class="mb-1 mt-1 swal2-input">' +
           '<label for="valor" style="display:block" >Valor</label>' +
@@ -34,14 +36,14 @@ var appFacturas = new Vue({
         cancelButtonColor: "#3085d6",
         preConfirm: () => {
           return [
-            (this.articulo = document.getElementById("articulo").value),
+            (this.articulo = document.getElementById("opcion")),this.articulo = this.articulo.options[this.articulo.selectedIndex].text,
             (this.cantidad = document.getElementById("cantidad").value),
             (this.valor = document.getElementById("valor").value),
           ];
         },
       });
-
-      if (this.articulo == "" || this.cantidad == "" || this.valor == "") {
+//this.articulo = this.articulo.options[this.articulo.selectedIndex].text;
+      if (this.articulo == "" || this.articulo=='Escoge un articulo'|| this.cantidad == "" || this.valor == "") {
         Swal.fire({
           type: "info",
           title: "Datos incompletos",
@@ -77,6 +79,39 @@ var appFacturas = new Vue({
             final(this.articulo, this.cantidad, this.valor, 0);
           }
         });
+      }
+    },
+    btnNP:async function nuevo(){
+      const { value: formValues } = await Swal.fire({
+        title: 'Entrada de productos',
+        html:
+          '<label for="nombre_producto">Producto</label>'+
+          '<input id="nombre_producto" class="swal2-input">' +
+          '<label for="precio">Precio</label>' +
+          '<input id="precio_producto" type="number" min="1" class="swal2-input">'+
+          '<label for="cantidad">Cantidad</label>' +
+          '<input id="cantidad_producto" type="number" min="1" value="1" class="swal2-input">',
+        focusConfirm: false,
+        showCancelButton: true,
+        preConfirm: () => {
+          return [
+             nombre_producto=document.getElementById('nombre_producto').value,
+             cantidad_producto=document.getElementById('cantidad_producto').value,
+             precio_producto=document.getElementById('precio_producto').value
+          ]
+        }
+      })
+      
+      if (Boolean(formValues)&&Boolean(nombre_producto)&&Boolean(precio_producto)) {
+        //Swal.fire(JSON.stringify(formValues))
+        this.AltaProductos(nombre_producto,cantidad_producto,precio_producto);
+        this.LlenarSelect();
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Te olvidaste de llenar un dato'
+        })
       }
     },
     btnEditar: async function (id, nombre, fecha, articulo, cantidad, valor) {
@@ -163,11 +198,21 @@ var appFacturas = new Vue({
         this.listarFacturas();
       });
     },
+    AltaProductos: function(nombre_producto,cantidad_producto,precio_producto){
+      axios.post(url_PRO, { opcion: 1, nombre:nombre_producto,cantidad:cantidad_producto, precio:precio_producto }).then((response) => {
+        
+      });
+      Swal.fire(
+        'Excelente!',
+        'Producto agregado!',
+        'success'
+      )
+    }
   },
-  created: function () {
+  created: function () {//Creador
     this.listarFacturas();
   },
-  computed: {
+  computed: {//Investigar mas acerca de computado
     totalFactura() {
       this.totalF = 0;
       for (factura of this.facturas) {
@@ -195,7 +240,7 @@ async function final(articulo, cantidad, valor) {
     },
   });
 
-  if (formValuesD&&Boolean(nombre)&&Boolean(fecha)) {
+  if (formValuesD && Boolean(nombre) && Boolean(fecha)) {
     productos(nombre, fecha, articulo, cantidad, valor, 1);
     const Toast = Swal.mixin({
       toast: true,
@@ -207,14 +252,14 @@ async function final(articulo, cantidad, valor) {
       type: "success",
       title: "¡Factura agregada!",
     });
-   }else {
+  } else {
     Swal.fire({
       type: "info",
       title: "Datos incompletos",
     });
     array.length = 0;
     subtotal = 0;
-    total=0;
+    total = 0;
   }
 }
 function productos(nombre, fecha, articulo, cantidad, valor, opt) {
@@ -280,4 +325,31 @@ function sub_tot_producto() {
       ).innerText = `Subtotal factura: ${subtotal}\n Total(con iva):${total}`;
     }
   }
+}
+function tomar(array) {//Cargamos la lista de los productos de la base de datos
+array.forEach(function(elemento) {//para cada dato en la tabla creamos un option
+  var miSelect = document.getElementById("opcion");
+  var aTag = document.createElement('option');
+    aTag.setAttribute('value',elemento.productos_pk);//y creamos el atributo value para cada dato (asi se nos facilita la obtencion del id)
+    aTag.innerHTML = elemento.prod_nombre;
+    miSelect.appendChild(aTag);
+});
+
+}
+function cargarV() {//Funcion creada para mostrar precios y demas cuando selecciona
+  document.getElementById('cantidad').value=1;
+  let valor_option=document.getElementById('opcion');
+  axios.post(url_PRO, { opcion: 4, ID:valor_option.value }).then((response) => {
+    let respuesta= response.data; 
+    for(let value of respuesta) {
+      document.getElementById('valor').value=value.prod_precio;
+      document.getElementById('cantidad').setAttribute('max',value.prod_cantidad);
+    } 
+    
+  });
+}
+function LlenarSelect() { //Llenamos el select con los productos disponibles
+  axios.post(url_PRO, { opcion: 3}).then((response) => {
+   tomar(response.data);
+  });
 }
