@@ -268,7 +268,7 @@ async function final(articulo, cantidad, valor) {
 }
 function productos(nombre, fecha, articulo, cantidad, valor, opt) {
   subtotal = Number(subtotal + cantidad * valor); //subtotal de los articulos de la factura * la cantidad
-  total = subtotal + Number(subtotal) * 0.19; //total de los articulos de la factura con el iva
+  total = subtotal + Number(subtotal) * 1; //total de los articulos de la factura con el iva
   //Comprobamos que los datos no esten vacios de nuevo
   sub_tot_producto();
   if (
