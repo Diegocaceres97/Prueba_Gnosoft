@@ -154,7 +154,11 @@ var appFacturas = new Vue({
       });
     },
     btnVer: function (id) {
+      if(id==0){
+        window.open(`./Front/prod_index.php?id=${id}`, "test0");
+      }else{
       window.open(`./Front/det_fac_index.php?id=${id}`, "test");
+      }
     },
     //Procedimientos
     //Procedimiento para listar

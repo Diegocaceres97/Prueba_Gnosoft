@@ -33,13 +33,21 @@ switch($opcion){
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);//FetchAll lo que hace es devolvernos un array con todo el conjunto de resultados
         break;
         case 4://Para cuando selecciona en la lista
-            $consulta = "SELECT * FROM productos WHERE productos_pk = '$id'";
+            $consulta = "SELECT * FROM productos";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);//FetchAll lo que hace es devolvernos un array con todo el conjunto de resultados
         break;
+        case 5://para restarle cantidad a un producto
+            //UPDATE productos SET prod_cantidad = (prod_cantidad - 1) WHERE productos_pk = 29
+            $consulta = "UPDATE productos SET prod_cantidad = (prod_cantidad - '$cantidad') WHERE productos_pk = '$id'";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();
+            $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        break;
         
 }
+
 print json_encode($data, JSON_UNESCAPED_UNICODE);
 $conexion = null; //Cerramos la conexion
 ?>

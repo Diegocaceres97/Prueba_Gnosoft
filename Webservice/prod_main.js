@@ -9,13 +9,12 @@ var appProductos = new Vue({
     totalF: 0,
   },
   methods: {
-    //Procedimientos
-    
+       //Procedimientos
     //Procedimiento para listar
     listarproductos: function () {
-      let id = obtenerID_URL(window.location.href);
+     // let id = obtenerID_URL(window.location.href);
      
-      axios.post(url, { opcion: 1, ID: id }).then((response) => {
+      axios.post(url_pro, { opcion: 4 }).then((response) => {
         this.productos = response.data;
         console.log(this.productos);
       });
@@ -40,3 +39,12 @@ function obtenerID_URL(urL) {
   let id = urL.substring(urL.lastIndexOf("=") + 1);
   return id;
 }
+
+ function Generarexcel(id){
+  var printContents=document.getElementById(id).innerHTML;
+  var originalContents = document.body.innerHTML;//obtenemos todo el contenido
+  document.body.innerHTML = printContents;
+  window.print();
+  document.body.innerHTML = originalContents;
+    
+ }

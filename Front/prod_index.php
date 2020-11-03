@@ -9,43 +9,41 @@
    <link rel="stylesheet" href="../Fachada/plugins/sweetalert2/sweetalert2.min.css">
    <!--Font awesome-->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-    <title>Detalles factura</title>
+    <title>Productos</title>
     <!--Css custom-->
     <link rel="stylesheet" href="../main.css">
 </head>
 <body>
 <header>
-<h2 class="text-center text-dark"><span class="badge badge-success">CRUD CON VUE.JS</span></h2>
+<h2 class="text-center text-dark"><span class="badge badge-success">PRODUCTOS</span></h2>
 </header>
 <div id="appFacturas">
 <div class="container">
 <div class="row">
 <div class="col">
-
+<button onclick="Generarexcel('tabla')" class="btn btn-success" title="Generar excel"><i class="far fa-file-excel"></i> </button>
 </div>
 <div class="col text-right">
 <h5>Total productos: <span class="badge badge-success">{{totalproductos}}</span></h5>
 </div>
 </div>
-<div class="row mt-5">
+<div class="row mt-5" id="tabla">
 <div class="col-lg-12">
     <table class="table table-striped"> <!--Stripped muestra une efecto entre filas-->
     <thead>
     <tr>
-    <th>Id detalle</th>
-    <th>Id factura</th>
-    <th>Nombre articulo</th>
+    <th>Nombre</th>
     <th>Cantidad</th>
-    <th>Valor</th>
+    <th>Precio</th>
+    <th>Fecha</th>
     </tr>
     </thead>
     <tbody>
-    <tr v-for="(deta_fact,indice) of productos">
-    <td>{{deta_fact.detallesfactura_pk}}</td>
-    <td>{{deta_fact.defa_fact_fk}}</td>
-    <td>{{deta_fact.defa_detalle}}</td>
-    <td>{{deta_fact.defa_cantidad}}</td>
-    <td>{{deta_fact.defa_valor}}</td>
+    <tr v-for="(prod,indice) of productos">
+    <td>{{prod.prod_nombre}}</td>
+    <td>{{prod.prod_cantidad}}</td>
+    <td>{{prod.prod_precio}}</td>
+    <td>{{prod.prod_fecha}}</td>
     </tr>
     </tbody>
     </table>
@@ -64,7 +62,7 @@
 <!--Sweetalert2-->
 <script src="../Fachada/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!--Codigo custom-->
-<script src="../Webservice/deta_fact_main.js"></script>
+<script src="../Webservice/prod_main.js"></script>
    
 </body>
 </html>
