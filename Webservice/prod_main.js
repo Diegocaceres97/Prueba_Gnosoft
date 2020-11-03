@@ -48,3 +48,13 @@ function obtenerID_URL(urL) {
   document.body.innerHTML = originalContents;
     
  }
+ $(document).ready(function () {//para generar excel por medio de la api 
+  $("#generar-excel").click(function () {
+  excel = new ExcelGen({
+    "src_id": "Tabla",
+    "show_header": true,
+    "type": "table"
+  });
+      excel.generate();
+  });
+});

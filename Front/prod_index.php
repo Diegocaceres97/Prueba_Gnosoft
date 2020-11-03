@@ -21,7 +21,8 @@
 <div class="container">
 <div class="row">
 <div class="col">
-<button onclick="Generarexcel('tabla')" class="btn btn-success" title="Generar excel"><i class="far fa-file-excel"></i> </button>
+<button onclick="Generarexcel('tabla')" class="btn btn-success" title="Imprimir"><i class="fas fa-print"></i> </button>
+<button class="btn btn-success" id="generar-excel" title="Generar excel"><i class="fas fa-file-csv"></i> </button>
 </div>
 <div class="col text-right">
 <h5>Total productos: <span class="badge badge-success">{{totalproductos}}</span></h5>
@@ -29,7 +30,7 @@
 </div>
 <div class="row mt-5" id="tabla">
 <div class="col-lg-12">
-    <table class="table table-striped"> <!--Stripped muestra une efecto entre filas-->
+    <table class="table table-striped" id="Tabla"> <!--Stripped muestra une efecto entre filas-->
     <thead>
     <tr>
     <th>Nombre</th>
@@ -63,6 +64,9 @@
 <script src="../Fachada/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!--Codigo custom-->
 <script src="../Webservice/prod_main.js"></script>
-   
+<!--Para generar excel scripts necesarios-->
+    <script type="text/javascript" src="../Fachada/jszip.js"></script>
+    <script type="text/javascript" src="../Fachada/FileSaver.js"></script>
+    <script type="text/javascript" src="../Fachada/excel-gen.js"></script>
 </body>
 </html>
