@@ -8,7 +8,22 @@ var appProductos = new Vue({
     productos: [],
     totalF: 0,
   },
-  methods: {
+  methods: { 
+    btnBorrar: function (id) {
+    Swal.fire({
+      title: "¿Está seguro de borrar el registro: " + id + " ?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Borrar",
+    }).then((result) => {
+      if (result.value) {
+        this.borrarFactura(id);
+        Swal.fire("¡Eliminado!", "El registro ha sido borrado.", "success");
+      }
+    });
+  },
        //Procedimientos
     //Procedimiento para listar
     listarproductos: function () {
@@ -20,6 +35,11 @@ var appProductos = new Vue({
       });
     
     },
+    borrarFactura: function(id){
+      axios.post(url_pro, { opcion: 6, ID: id }).then((response) => {
+        this.listarproductos();
+      });
+        },
   },
   created: function () {
     this.listarproductos();
@@ -48,7 +68,7 @@ function obtenerID_URL(urL) {
   document.body.innerHTML = originalContents;
     
  }
- $(document).ready(function () {//para generar excel por medio de la api 
+ $(document).ready(function () {//para generar excel por medio de la biblioteca generada de js-excel-generator
   $("#generar-excel").click(function () {
   excel = new ExcelGen({
     "src_id": "Tabla",

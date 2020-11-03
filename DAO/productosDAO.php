@@ -45,6 +45,11 @@ switch($opcion){
             $resultado->execute();
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;
+        case 6: //Al eliminar una factura y su registro en detalles
+            $consulta = "DELETE FROM productos where productos_pk='$id';";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();
+        break;
         
 }
 

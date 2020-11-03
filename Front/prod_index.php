@@ -45,6 +45,10 @@
     <td>{{prod.prod_cantidad}}</td>
     <td>{{prod.prod_precio}}</td>
     <td>{{prod.prod_fecha}}</td>
+    <td>
+    <button class="btn btn-danger" title="Eliminar" @click="btnBorrar(prod.productos_pk)">
+    <i class="fas fa-trash-alt"></i></button>
+    </td>
     </tr>
     </tbody>
     </table>
