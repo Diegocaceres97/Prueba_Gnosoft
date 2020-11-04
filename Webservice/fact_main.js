@@ -226,7 +226,7 @@ var appFacturas = new Vue({
     },
   },
 });
-async function final(articulo, cantidad, valor) {
+async function final(articulo, cantidad, valor) {//Registro de nombre y fecha de la factura a crear
   const { value: formValuesD } = await Swal.fire({
     title: "Datos esenciales",
     html:
@@ -268,7 +268,7 @@ async function final(articulo, cantidad, valor) {
 }
 function productos(nombre, fecha, articulo, cantidad, valor, opt) {
   subtotal = Number(subtotal + cantidad * valor); //subtotal de los articulos de la factura * la cantidad
-  total = subtotal + Number(subtotal) * 1; //total de los articulos de la factura con el iva
+ // total = subtotal + Number(subtotal) * 1; //total de los articulos de la factura con el iva
   //Comprobamos que los datos no esten vacios de nuevo
   sub_tot_producto();
   if (
@@ -290,7 +290,7 @@ function productos(nombre, fecha, articulo, cantidad, valor, opt) {
             Nombre: nombre,
             Fecha: fecha,
             Subtotal: subtotal,
-            Total: total,
+            //Total: total,
             ID: id,
           })
           .then((response) => {
@@ -326,7 +326,7 @@ function sub_tot_producto() {
     if (Boolean(subtotal) || Boolean(total)) {
       document.getElementById(
         "sub_fact_act"
-      ).innerText = `Subtotal factura: ${subtotal}\n Total(con iva):${total}`;
+      ).innerText = `total factura: ${subtotal}`;//Arreglado para ya no mostrar el total + el iva
     }
   }
 }
@@ -343,7 +343,6 @@ array.forEach(function(elemento) {//para cada dato en la tabla creamos un option
 function cargarV() {//Funcion creada para mostrar precios y demas cuando selecciona
   document.getElementById('cantidad').value=1;
   let valor_option=document.getElementById('opcion');
-  alert(valor_option.value);
   axios.post(url_PRO, { opcion: 4, ID:valor_option.value }).then((response) => {
     let respuesta= response.data; 
     for(let value of respuesta) {

@@ -33,7 +33,13 @@ switch($opcion){
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);//FetchAll lo que hace es devolvernos un array con todo el conjunto de resultados
         break;
         case 4://Para cuando selecciona en el boton de productos
-            $consulta = "SELECT * FROM productos where productos_pk='$id'";
+            $consulta;
+            if($id==0){
+                $consulta = "SELECT * FROM productos";
+            }else{
+                $consulta = "SELECT * FROM productos where productos_pk='$id'";
+            }
+           
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);//FetchAll lo que hace es devolvernos un array con todo el conjunto de resultados

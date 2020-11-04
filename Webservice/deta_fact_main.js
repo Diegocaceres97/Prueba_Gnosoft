@@ -14,7 +14,6 @@ var appProductos = new Vue({
     //Procedimiento para listar
     listarproductos: function () {
       let id = obtenerID_URL(window.location.href);
-     
       axios.post(url, { opcion: 1, ID: id }).then((response) => {
         this.productos = response.data;
         console.log(this.productos);
