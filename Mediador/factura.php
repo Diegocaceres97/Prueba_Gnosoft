@@ -15,12 +15,12 @@ $array_string=implode(" ",$array);//Se convierte el array en un string (cadena d
 $array_with_ID=str_replace('ID',$id,$array_string);//se reemplaza el id en la cadena por el nuevo
 
 //comprobamos de nuevo que algun dato no este vacio o erroneo
-$esta_dat;
+$est_dat;
 if($subtotal==0||$total==0){
     $est_dat='ERROR';
 }else{
 $est_dat = "START TRANSACTION;
-INSERT INTO facturas(fact_nombre,fact_fecha,fact_subtotal,fact_iva,fact_total) VALUES ('$nombre','$fecha','$subtotal',19,'$total');
+INSERT INTO facturas(fact_nombre,fact_fecha,fact_subtotal,fact_iva,fact_total) VALUES ('$nombre','$fecha','$subtotal',0,'$total');
 $array_with_ID
 COMMIT;";//estructura de los datos que se mandaran en la transaccion
 //muy importante ya que podría afectar a la funcionalidad completamente

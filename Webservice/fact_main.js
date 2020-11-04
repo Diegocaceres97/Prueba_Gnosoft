@@ -343,6 +343,7 @@ array.forEach(function(elemento) {//para cada dato en la tabla creamos un option
 function cargarV() {//Funcion creada para mostrar precios y demas cuando selecciona
   document.getElementById('cantidad').value=1;
   let valor_option=document.getElementById('opcion');
+  alert(valor_option.value);
   axios.post(url_PRO, { opcion: 4, ID:valor_option.value }).then((response) => {
     let respuesta= response.data; 
     for(let value of respuesta) {
