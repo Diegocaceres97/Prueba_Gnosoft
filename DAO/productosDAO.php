@@ -46,7 +46,7 @@ switch($opcion){
         break;
         case 5://para restarle cantidad a un producto
             //UPDATE productos SET prod_cantidad = (prod_cantidad - 1) WHERE productos_pk = 29
-            $consulta = "UPDATE productos SET prod_cantidad = (prod_cantidad - '$cantidad') WHERE productos_pk = '$id'";
+            $consulta = "UPDATE productos SET prod_cantidad = (prod_cantidad - '$cantidad_producto') WHERE prod_nombre = '$nombre_producto'";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);

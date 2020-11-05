@@ -4,6 +4,11 @@ var url_PRO = "DAO/productosDAO.php";
 var subtotal = 0;
 var total = 0;
 const array = new Array();
+var ObjectE = {
+  nombre: "",
+  cantidad: "",
+}; //Objeto copia para cuando el usuario no decida realizar la operacion
+const ArrayE = new Array(); //Array para guardar el objeto (Complementario)
 var appFacturas = new Vue({
   el: "#appFacturas",
   data: {
@@ -36,14 +41,22 @@ var appFacturas = new Vue({
         cancelButtonColor: "#3085d6",
         preConfirm: () => {
           return [
-            (this.articulo = document.getElementById("opcion")),this.articulo = this.articulo.options[this.articulo.selectedIndex].text,
+            (this.articulo = document.getElementById("opcion")),
+            (this.articulo = this.articulo.options[
+              this.articulo.selectedIndex
+            ].text),
             (this.cantidad = document.getElementById("cantidad").value),
             (this.valor = document.getElementById("valor").value),
           ];
         },
       });
-//this.articulo = this.articulo.options[this.articulo.selectedIndex].text;
-      if (this.articulo == "" || this.articulo=='Escoge un articulo'|| this.cantidad == "" || this.valor == "") {
+      //this.articulo = this.articulo.options[this.articulo.selectedIndex].text;
+      if (
+        this.articulo == "" ||
+        this.articulo == "Escoge un articulo" ||
+        this.cantidad == "" ||
+        this.valor == ""
+      ) {
         Swal.fire({
           type: "info",
           title: "Datos incompletos",
@@ -63,7 +76,17 @@ var appFacturas = new Vue({
           cancelButtonText: "No, hasta acá",
         }).then((result) => {
           if (result.isConfirmed) {
+            //Opcion para registras mas productos
             agr_pro_fac(); //Nos permite registrar mas productos
+
+            //Pequeña operacion que disminuira el valor
+            axios
+              .post(url_PRO, {
+                opcion: 5,
+                nombre: this.articulo,
+                cantidad: this.cantidad,
+              })
+              .then((response) => {});
             productos(
               "test",
               "test",
@@ -76,42 +99,58 @@ var appFacturas = new Vue({
             this.cantidad = "";
             this.valor = "";
           } else {
+            //Pequeña operacion que disminuira el valor
+            axios
+              .post(url_PRO, {
+                opcion: 5,
+                nombre: this.articulo,
+                cantidad: this.cantidad,
+              })
+              .then((response) => {});
+            //Opcion para colocar
             final(this.articulo, this.cantidad, this.valor, 0);
           }
         });
       }
     },
-    btnNP:async function nuevo(){
+    btnNP: async function nuevo() {
       const { value: formValues } = await Swal.fire({
-        title: 'Entrada de productos',
+        title: "Entrada de productos",
         html:
-          '<label for="nombre_producto">Producto</label>'+
+          '<label for="nombre_producto">Producto</label>' +
           '<input id="nombre_producto" class="swal2-input">' +
           '<label for="precio">Precio</label>' +
-          '<input id="precio_producto" type="number" min="1" class="swal2-input">'+
+          '<input id="precio_producto" type="number" min="1" class="swal2-input">' +
           '<label for="cantidad">Cantidad</label>' +
           '<input id="cantidad_producto" type="number" min="1" value="1" class="swal2-input">',
         focusConfirm: false,
         showCancelButton: true,
         preConfirm: () => {
           return [
-             nombre_producto=document.getElementById('nombre_producto').value,
-             cantidad_producto=document.getElementById('cantidad_producto').value,
-             precio_producto=document.getElementById('precio_producto').value
-          ]
-        }
-      })
-      
-      if (Boolean(formValues)&&Boolean(nombre_producto)&&Boolean(precio_producto)) {
+            (nombre_producto = document.getElementById("nombre_producto")
+              .value),
+            (cantidad_producto = document.getElementById("cantidad_producto")
+              .value),
+            (precio_producto = document.getElementById("precio_producto")
+              .value),
+          ];
+        },
+      });
+
+      if (
+        Boolean(formValues) &&
+        Boolean(nombre_producto) &&
+        Boolean(precio_producto)
+      ) {
         //Swal.fire(JSON.stringify(formValues))
-        this.AltaProductos(nombre_producto,cantidad_producto,precio_producto);
+        this.AltaProductos(nombre_producto, cantidad_producto, precio_producto);
         this.LlenarSelect();
-      }else{
+      } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Te olvidaste de llenar un dato'
-        })
+          icon: "error",
+          title: "Oops...",
+          text: "Te olvidaste de llenar un dato",
+        });
       }
     },
     btnEditar: async function (id, nombre, fecha, articulo, cantidad, valor) {
@@ -154,10 +193,10 @@ var appFacturas = new Vue({
       });
     },
     btnVer: function (id) {
-      if(id==0){
+      if (id == 0) {
         window.open(`./Front/prod_index.php?id=${id}`, "test0");
-      }else{
-      window.open(`./Front/det_fac_index.php?id=${id}`, "test");
+      } else {
+        window.open(`./Front/det_fac_index.php?id=${id}`, "test");
       }
     },
     //Procedimientos
@@ -202,21 +241,28 @@ var appFacturas = new Vue({
         this.listarFacturas();
       });
     },
-    AltaProductos: function(nombre_producto,cantidad_producto,precio_producto){
-      axios.post(url_PRO, { opcion: 1, nombre:nombre_producto,cantidad:cantidad_producto, precio:precio_producto }).then((response) => {
-        
-      });
-      Swal.fire(
-        'Excelente!',
-        'Producto agregado!',
-        'success'
-      )
-    }
+    AltaProductos: function (
+      nombre_producto,
+      cantidad_producto,
+      precio_producto
+    ) {
+      axios
+        .post(url_PRO, {
+          opcion: 1,
+          nombre: nombre_producto,
+          cantidad: cantidad_producto,
+          precio: precio_producto,
+        })
+        .then((response) => {});
+      Swal.fire("Excelente!", "Producto agregado!", "success");
+    },
   },
-  created: function () {//Creador
+  created: function () {
+    //Creador
     this.listarFacturas();
   },
-  computed: {//Investigar mas acerca de computado
+  computed: {
+    //Investigar mas acerca de computado
     totalFactura() {
       this.totalF = 0;
       for (factura of this.facturas) {
@@ -226,7 +272,8 @@ var appFacturas = new Vue({
     },
   },
 });
-async function final(articulo, cantidad, valor) {//Registro de nombre y fecha de la factura a crear
+async function final(articulo, cantidad, valor) {
+  //Registro de nombre y fecha de la factura a crear
   const { value: formValuesD } = await Swal.fire({
     title: "Datos esenciales",
     html:
@@ -267,8 +314,9 @@ async function final(articulo, cantidad, valor) {//Registro de nombre y fecha de
   }
 }
 function productos(nombre, fecha, articulo, cantidad, valor, opt) {
+  //Funcion para poder ir agregando productos ala factura y DetaFact
   subtotal = Number(subtotal + cantidad * valor); //subtotal de los articulos de la factura * la cantidad
- // total = subtotal + Number(subtotal) * 1; //total de los articulos de la factura con el iva
+  // total = subtotal + Number(subtotal) * 1; //total de los articulos de la factura con el iva
   //Comprobamos que los datos no esten vacios de nuevo
   sub_tot_producto();
   if (
@@ -280,6 +328,12 @@ function productos(nombre, fecha, articulo, cantidad, valor, opt) {
   ) {
     const det_tra = `INSERT INTO detallesfactura(defa_fact_fk,defa_detalle,defa_cantidad,defa_valor) VALUES ('ID','${articulo}','${cantidad}','${valor}');`;
     array.push(det_tra);
+
+    //Borramos los objetos
+    BorrarObjetos();
+
+    Ag_pr_Ma(articulo, cantidad);
+
     if (opt == 1) {
       axios.post(url, { opcion: 5 }).then((response) => {
         //buscamos por medio de un metodo en el DAO el último id de las facturas
@@ -299,7 +353,7 @@ function productos(nombre, fecha, articulo, cantidad, valor, opt) {
             subtotal = 0;
             total = 0;
             appFacturas.altaFactura(
-              response.data,
+              response.data, //este response vendría siendo la transacción armada para mandar como tal en bloque
               nombre,
               fecha,
               articulo,
@@ -326,34 +380,54 @@ function sub_tot_producto() {
     if (Boolean(subtotal) || Boolean(total)) {
       document.getElementById(
         "sub_fact_act"
-      ).innerText = `total factura: ${subtotal}`;//Arreglado para ya no mostrar el total + el iva
+      ).innerText = `total factura: ${subtotal}`; //Arreglado para ya no mostrar el total + el iva
     }
   }
 }
-function tomar(array) {//Cargamos la lista de los productos de la base de datos
-array.forEach(function(elemento) {//para cada dato en la tabla creamos un option
-  var miSelect = document.getElementById("opcion");
-  var aTag = document.createElement('option');
-    aTag.setAttribute('value',elemento.productos_pk);//y creamos el atributo value para cada dato (asi se nos facilita la obtencion del id)
+function tomar(array) {
+  //Cargamos la lista de los productos de la base de datos
+  array.forEach(function (elemento) {
+    //para cada dato en la tabla creamos un option
+    var miSelect = document.getElementById("opcion");
+    var aTag = document.createElement("option");
+    aTag.setAttribute("value", elemento.productos_pk); //y creamos el atributo value para cada dato (asi se nos facilita la obtencion del id)
     aTag.innerHTML = elemento.prod_nombre;
     miSelect.appendChild(aTag);
-});
-
-}
-function cargarV() {//Funcion creada para mostrar precios y demas cuando selecciona
-  document.getElementById('cantidad').value=1;
-  let valor_option=document.getElementById('opcion');
-  axios.post(url_PRO, { opcion: 4, ID:valor_option.value }).then((response) => {
-    let respuesta= response.data; 
-    for(let value of respuesta) {
-      document.getElementById('valor').value=value.prod_precio;
-      document.getElementById('cantidad').setAttribute('max',value.prod_cantidad);
-    } 
-    
   });
 }
-function LlenarSelect() { //Llenamos el select con los productos disponibles
-  axios.post(url_PRO, { opcion: 3}).then((response) => {
-   tomar(response.data);
+function cargarV() {
+  //Funcion creada para mostrar precios y demas cuando selecciona
+  document.getElementById("cantidad").value = 1;
+  let valor_option = document.getElementById("opcion");
+  axios
+    .post(url_PRO, { opcion: 4, ID: valor_option.value })
+    .then((response) => {
+      //Por medio del value del option que es el ID se busca el producto en especifico
+      let respuesta = response.data;
+      for (let value of respuesta) {
+        document.getElementById("valor").value = value.prod_precio;
+        document
+          .getElementById("cantidad")
+          .setAttribute("max", value.prod_cantidad);
+      }
+    });
+}
+function LlenarSelect() {
+  //Llenamos el select con los productos disponibles
+  axios.post(url_PRO, { opcion: 3 }).then((response) => {
+    tomar(response.data);
   });
+}
+function BorrarObjetos() {
+  ObjectE.nombre = "";
+  ObjectE.cantidad = "";
+  console.error(ObjectE);
+}
+function Ag_pr_Ma(articulo, cantidad) { //Funcion en la que va agregando los datos al objeto y al array
+  let objeto = Object.assign({},ObjectE);//Copiamos la referencia del objeto por medio del assign
+  objeto.nombre = articulo;
+  objeto.cantidad = cantidad;
+  ArrayE.push(objeto);
+  console.info(objeto);
+  console.warn(ArrayE);
 }
