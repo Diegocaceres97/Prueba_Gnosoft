@@ -14,6 +14,7 @@ $cantidad_producto= (isset($_POST['cantidad'])) ? $_POST['cantidad'] : '';
 $precio_producto= (isset($_POST['precio'])) ? $_POST['precio'] : '';
 $fecha = date("Y-m-d");
 $id= (isset($_POST['ID'])) ? $_POST['ID'] : '';
+$Dec_sum_res= (isset($_POST['decision'])) ? $_POST['decision'] : '';
 switch($opcion){
     case 1: //Al registrar nueva factura
             $consulta = "INSERT INTO productos (prod_nombre,prod_cantidad,prod_precio,prod_fecha) VALUES ('$nombre_producto','$cantidad_producto','$precio_producto','$fecha')";
@@ -27,6 +28,7 @@ switch($opcion){
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);//FetchAll lo que hace es devolvernos un array con todo el conjunto de resultados
         break;
         case 3://Para obtener
+            
             $consulta = "SELECT * FROM productos WHERE prod_cantidad > 0";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
@@ -46,8 +48,12 @@ switch($opcion){
         break;
         case 5://para restarle cantidad a un producto
             //UPDATE productos SET prod_cantidad = (prod_cantidad - 1) WHERE productos_pk = 29
+            if($Dec_sum_res==0){
             $consulta = "UPDATE productos SET prod_cantidad = (prod_cantidad - '$cantidad_producto') WHERE prod_nombre = '$nombre_producto'";
-            $resultado = $conexion->prepare($consulta);
+            }else{
+                $consulta = "UPDATE productos SET prod_cantidad = (prod_cantidad + '$cantidad_producto') WHERE prod_nombre = '$nombre_producto'";
+            }
+              $resultado = $conexion->prepare($consulta);
             $resultado->execute();
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;

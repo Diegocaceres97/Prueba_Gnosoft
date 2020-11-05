@@ -4,10 +4,10 @@ var url_PRO = "DAO/productosDAO.php";
 var subtotal = 0;
 var total = 0;
 const array = new Array();
-var ObjectE = {
+var ObjectE = {//Objeto en el cual se mantendrá el orden los productos añadidos en el Soft
   nombre: "",
   cantidad: "",
-}; //Objeto copia para cuando el usuario no decida realizar la operacion
+}; 
 const ArrayE = new Array(); //Array para guardar el objeto (Complementario)
 var appFacturas = new Vue({
   el: "#appFacturas",
@@ -64,6 +64,7 @@ var appFacturas = new Vue({
         array.length = 0; //vaciamos el array en caso de que los datos no esten llenos o si clickeamos por fuera
         subtotal = 0;
         total = 0;
+        reest_cant_prod();
       } else {
         Swal.fire({
           title: "Registro  de productos",
@@ -80,13 +81,7 @@ var appFacturas = new Vue({
             agr_pro_fac(); //Nos permite registrar mas productos
 
             //Pequeña operacion que disminuira el valor
-            axios
-              .post(url_PRO, {
-                opcion: 5,
-                nombre: this.articulo,
-                cantidad: this.cantidad,
-              })
-              .then((response) => {});
+            oper_rest_cant_prod(this.articulo,this.cantidad);
             productos(
               "test",
               "test",
@@ -100,13 +95,7 @@ var appFacturas = new Vue({
             this.valor = "";
           } else {
             //Pequeña operacion que disminuira el valor
-            axios
-              .post(url_PRO, {
-                opcion: 5,
-                nombre: this.articulo,
-                cantidad: this.cantidad,
-              })
-              .then((response) => {});
+           // oper_rest_cant_prod(this.articulo,this.cantidad);
             //Opcion para colocar
             final(this.articulo, this.cantidad, this.valor, 0);
           }
@@ -311,6 +300,7 @@ async function final(articulo, cantidad, valor) {
     array.length = 0;
     subtotal = 0;
     total = 0;
+    reest_cant_prod();
   }
 }
 function productos(nombre, fecha, articulo, cantidad, valor, opt) {
@@ -329,7 +319,7 @@ function productos(nombre, fecha, articulo, cantidad, valor, opt) {
     const det_tra = `INSERT INTO detallesfactura(defa_fact_fk,defa_detalle,defa_cantidad,defa_valor) VALUES ('ID','${articulo}','${cantidad}','${valor}');`;
     array.push(det_tra);
 
-    //Borramos los objetos
+    //Borramos el objeto con la info general para mantener una 'integridad referencial'
     BorrarObjetos();
 
     Ag_pr_Ma(articulo, cantidad);
@@ -423,11 +413,37 @@ function BorrarObjetos() {
   ObjectE.cantidad = "";
   console.error(ObjectE);
 }
-function Ag_pr_Ma(articulo, cantidad) { //Funcion en la que va agregando los datos al objeto y al array
+function Ag_pr_Ma(articulo, cantidad) { //Funcion en la que va agregando los datos al objeto y al array para tratarlos en caso de que 
+  //no se complete la opcion de generar factura o de resulta exitosa la operacion
   let objeto = Object.assign({},ObjectE);//Copiamos la referencia del objeto por medio del assign
+  // (se guardará como un objeto único en su información con alta integridad referencial)
   objeto.nombre = articulo;
   objeto.cantidad = cantidad;
   ArrayE.push(objeto);
   console.info(objeto);
-  console.warn(ArrayE);
+  //console.warn(ArrayE);
+}
+function reest_cant_prod(){//Funcion para reestablecer los productos que se quitaron de productos al agregarlos en factura (cantidad)
+for (let datos of ArrayE) {
+  console.warn("Nombre articulo: "+datos.nombre+" Cantidad:"+datos.cantidad);
+  axios
+  .post(url_PRO, {
+    opcion: 5,
+    nombre: datos.nombre,
+    cantidad: datos.cantidad,
+    decision: 1 //en base a esta decision no restara si no sumará lo quitado en lo que iba de la factura
+  })
+  .then((response) => {});
+}
+ArrayE.length=0;//Limpiamos el array 
+}
+function oper_rest_cant_prod(articulo,cantidad){//Funcion para ir rebajando la cantidad en la BD cuando añade un articulo a la factura
+  axios
+  .post(url_PRO, {
+    opcion: 5,
+    nombre: articulo,
+    cantidad: cantidad,
+    decision: 0
+  })
+  .then((response) => {});
 }
