@@ -97,6 +97,7 @@ var appFacturas = new Vue({
             //Pequeña operacion que disminuira el valor
            // oper_rest_cant_prod(this.articulo,this.cantidad);
             //Opcion para colocar
+            Ag_pr_Ma(this.articulo,this.cantidad);
             final(this.articulo, this.cantidad, this.valor, 0);
           }
         });
@@ -262,7 +263,9 @@ var appFacturas = new Vue({
   },
 });
 async function final(articulo, cantidad, valor) {
+  oper_rest_cant_prod(articulo,cantidad);//Agregamos el "ultimo producto" que seria en este caso al ya añadir un nombre y fecha
   //Registro de nombre y fecha de la factura a crear
+
   const { value: formValuesD } = await Swal.fire({
     title: "Datos esenciales",
     html:
@@ -342,6 +345,7 @@ function productos(nombre, fecha, articulo, cantidad, valor, opt) {
             array.length = 0; //vaciamos array
             subtotal = 0;
             total = 0;
+            ArrayE.length=0;//Vaciamos el array contenedor copia al ser agregada la factura
             appFacturas.altaFactura(
               response.data, //este response vendría siendo la transacción armada para mandar como tal en bloque
               nombre,
@@ -414,7 +418,7 @@ function BorrarObjetos() {
   console.error(ObjectE);
 }
 function Ag_pr_Ma(articulo, cantidad) { //Funcion en la que va agregando los datos al objeto y al array para tratarlos en caso de que 
-  //no se complete la opcion de generar factura o de resulta exitosa la operacion
+  //no se complete la opcion de generar factura o que no resulte exitosa la operacion
   let objeto = Object.assign({},ObjectE);//Copiamos la referencia del objeto por medio del assign
   // (se guardará como un objeto único en su información con alta integridad referencial)
   objeto.nombre = articulo;
