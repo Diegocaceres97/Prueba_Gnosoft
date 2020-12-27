@@ -1,3 +1,4 @@
+
 var url = "DAO/facturaDAO.php"; //Url que vamos a utilizar para enviar los datos via axios
 var url_VO = "Mediador/factura.php";
 var url_PRO = "DAO/productosDAO.php";
