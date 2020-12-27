@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/Diegocaceres97/Prueba_Gnosoft#readme",
   "devDependencies": {
+   
+  },
+  "dependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
@@ -34,6 +37,5 @@
     "regenerator-runtime": "^0.13.7",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0"
-  },
-  "dependencies": {}
+  }
 }
