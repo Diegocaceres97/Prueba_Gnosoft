@@ -35,8 +35,9 @@
     <tr>
     <th>Nombre</th>
     <th>Cantidad</th>
-    <th>Precio</th>
+    <th>Precio_Unidad</th>
     <th>Fecha</th>
+    <th>Total_precio</th>
     </tr>
     </thead>
     <tbody>
@@ -45,6 +46,7 @@
     <td>{{prod.prod_cantidad}}</td>
     <td>{{prod.prod_precio}}</td>
     <td>{{prod.prod_fecha}}</td>
+    <td>{{Number(prod.prod_cantidad)*Number(prod.prod_precio)}}</td>
     <td>
     <button class="btn btn-danger" title="Eliminar" @click="btnBorrar(prod.productos_pk)">
     <i class="fas fa-trash-alt"></i></button>
