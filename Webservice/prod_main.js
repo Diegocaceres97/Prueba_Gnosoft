@@ -24,6 +24,31 @@ var appProductos = new Vue({
       }
     });
   },
+  btnEditar: async function (id, nombre, cantidad, precio) {
+    await Swal.fire({
+      title: "Editar",
+      html:
+        '<label for="name">Nombre</label>' +
+        '<input id="name" class="mt-1 mb-1 swal2-input" value="' +
+        nombre + '">'+
+        '<label for="precio">Precio</label>' +
+          '<input id="precio_producto" type="number" min="1" class="swal2-input" value="' +
+          precio +'">'+
+          '<label for="cantidad">Cantidad</label>' +
+          '<input id="cantidad_producto" type="number" min="1" class="swal2-input" value="'+
+          cantidad+'">',
+      focusConfirm: false,
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.value) {
+        (nombre = document.getElementById("name").value),
+          (precio = document.getElementById("precio_producto").value),
+          (cantidad=document.getElementById('cantidad_producto').value)
+          this.editarProducto(id, nombre, precio,cantidad);
+        Swal.fire("¡Actualizado!", "El registro fue actualizado", "success");
+      }
+    }); //verdaderamente no es aconsejable editar las facturas despues de creadas o eliminarlas
+  },
        //Procedimientos
     //Procedimiento para listar
     listarproductos: function () {
@@ -34,6 +59,19 @@ var appProductos = new Vue({
         console.log(this.productos);
       });
     
+    },
+    editarProducto: function (id,nombre, precio,cantidad) {
+      axios
+        .post(url_pro, {
+          opcion: 7,
+          ID: id,
+          nombre: nombre,
+          precio: precio,
+          cantidad:cantidad
+        })
+        .then((response) => {
+          this.listarproductos();
+        });
     },
     borrarFactura: function(id){
       axios.post(url_pro, { opcion: 6, ID: id }).then((response) => {

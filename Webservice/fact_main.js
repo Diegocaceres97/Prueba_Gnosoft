@@ -144,7 +144,7 @@ var appFacturas = new Vue({
         });
       }
     },
-    btnEditar: async function (id, nombre, fecha, articulo, cantidad, valor) {
+    btnEditar: async function (id, nombre, fecha) {
       await Swal.fire({
         title: "Editar",
         html:

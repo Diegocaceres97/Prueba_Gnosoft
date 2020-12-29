@@ -48,6 +48,8 @@
     <td>{{prod.prod_fecha}}</td>
     <td>{{Number(prod.prod_cantidad)*Number(prod.prod_precio)}}</td>
     <td>
+    <button class="btn btn-secondary" title="Editar" @click="btnEditar(prod.productos_pk,prod.prod_nombre,
+    prod.prod_cantidad,prod.prod_precio)"> <i class="fas fa-pencil-alt"></i>
     <button class="btn btn-danger" title="Eliminar" @click="btnBorrar(prod.productos_pk)">
     <i class="fas fa-trash-alt"></i></button>
     </td>

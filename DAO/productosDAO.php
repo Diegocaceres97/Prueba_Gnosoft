@@ -62,6 +62,12 @@ switch($opcion){
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
         break;
+        case 7: //Al editar una producto
+            $consulta = "UPDATE productos SET prod_nombre='$nombre_producto', prod_cantidad='$cantidad_producto', prod_precio='$precio_producto' where productos_pk='$id'";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();
+            $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        break;
         
 }
 
