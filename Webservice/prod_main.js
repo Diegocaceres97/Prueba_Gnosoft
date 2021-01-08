@@ -45,7 +45,7 @@ var appProductos = new Vue({
           (precio = document.getElementById("precio_producto").value),
           (cantidad=document.getElementById('cantidad_producto').value)
           this.editarProducto(id, nombre, precio,cantidad);
-        Swal.fire("¡Actualizado!", "El registro fue actualizado", "success");
+        Swal.fire("¡Actualizado!", "El producto fue actualizado", "success");
       }
     }); //verdaderamente no es aconsejable editar las facturas despues de creadas o eliminarlas
   },

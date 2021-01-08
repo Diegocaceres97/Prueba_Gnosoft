@@ -50,6 +50,12 @@ switch($opcion){
             $ultimo_id = $stmt->fetchColumn();//por medio de PDO
             $data = $ultimo_id;
             break;
+         case 6://Caso creado para ejecutar consultas sql/querys
+            $consulta = "UPDATE productos SET prod_hist_cant = 1 WHERE productos_pk = 81 ";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();
+            $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+            break;
 }
 print json_encode($data, JSON_UNESCAPED_UNICODE);
 $conexion = null; //Cerramos la conexion

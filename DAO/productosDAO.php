@@ -17,7 +17,7 @@ $id= (isset($_POST['ID'])) ? $_POST['ID'] : '';
 $Dec_sum_res= (isset($_POST['decision'])) ? $_POST['decision'] : '';
 switch($opcion){
     case 1: //Al registrar nueva factura
-            $consulta = "INSERT INTO productos (prod_nombre,prod_cantidad,prod_precio,prod_fecha) VALUES ('$nombre_producto','$cantidad_producto','$precio_producto','$fecha')";
+            $consulta = "INSERT INTO productos (prod_nombre,prod_cantidad,prod_precio,prod_fecha,prod_hist_cant) VALUES ('$nombre_producto','$cantidad_producto','$precio_producto','$fecha','$cantidad_producto')";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
     break;
@@ -63,12 +63,27 @@ switch($opcion){
             $resultado->execute();
         break;
         case 7: //Al editar una producto
-            $consulta = "UPDATE productos SET prod_nombre='$nombre_producto', prod_cantidad='$cantidad_producto', prod_precio='$precio_producto' where productos_pk='$id'";
+            $consulta = " UPDATE productos
+            SET    
+            
+            prod_hist_cant = CASE
+                     WHEN prod_cantidad > '$cantidad_producto' THEN (prod_hist_cant - (prod_cantidad -'$cantidad_producto'))
+                     WHEN prod_cantidad < '$cantidad_producto'  THEN ('$cantidad_producto' - prod_cantidad ) + prod_hist_cant
+                    ELSE prod_hist_cant
+                   END,
+            prod_nombre='$nombre_producto', prod_cantidad='$cantidad_producto', prod_precio='$precio_producto'
+           WHERE productos_pk='$id'";
+        //     UPDATE productos
+        //     SET    prod_hist_cant = CASE
+        //              WHEN prod_cantidad > '$cantidad_producto' OR prod_cantidad = '$cantidad_producto' THEN prod_hist_cant + 1
+        //              WHEN prod_cantidad < '$cantidad_producto'  THEN prod_hist_cant-1
+        //              ELSE prod_hist_cant
+        //            END
+        //    WHERE productos_pk='$id'
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;
-        
 }
 
 print json_encode($data, JSON_UNESCAPED_UNICODE);

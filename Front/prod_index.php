@@ -38,6 +38,7 @@
     <th>Precio_Unidad</th>
     <th>Fecha</th>
     <th>Total_precio</th>
+    <th>Historial_Cant</th>
     </tr>
     </thead>
     <tbody>
@@ -47,6 +48,7 @@
     <td>{{prod.prod_precio}}</td>
     <td>{{prod.prod_fecha}}</td>
     <td>{{Number(prod.prod_cantidad)*Number(prod.prod_precio)}}</td>
+    <td>{{prod.prod_hist_cant}}</td>
     <td>
     <button class="btn btn-secondary" title="Editar" @click="btnEditar(prod.productos_pk,prod.prod_nombre,
     prod.prod_cantidad,prod.prod_precio)"> <i class="fas fa-pencil-alt"></i>

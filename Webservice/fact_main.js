@@ -24,7 +24,7 @@ var appFacturas = new Vue({
   methods: {
     //Botones
     //Hacemos uso de SweetAlert2 para las opciones crud
-    btnAlta: async function agr_pro_fac() {
+    btnAlta: async function agr_pro_fac() {//Registro de factura/venta
       LlenarSelect();
       const { value: formValues } = await Swal.fire({
         title: "Venta producto",
@@ -197,6 +197,9 @@ var appFacturas = new Vue({
         this.facturas = response.data;
         console.log(this.facturas);
       });
+      // axios.post(url, { opcion: 6 }).then((response) => {
+      //   alert('ejecuto10');
+      // });
     },
 
     //Procedimiento CREAR
