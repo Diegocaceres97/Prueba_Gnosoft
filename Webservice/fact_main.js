@@ -335,6 +335,7 @@ function productos(nombre, fecha, articulo, cantidad, valor, opt) {
       axios.post(url, { opcion: 5 }).then((response) => {
         //buscamos por medio de un metodo en el DAO el último id de las facturas
         let id = response.data;
+        console.log("ESTE ES EL IDDDD:" +id);
         axios
           .post(url_VO, {
             Valor: array,
