@@ -10,6 +10,7 @@ $fecha= (isset($_POST['Fecha'])) ? $_POST['Fecha'] : '';
 $subtotal= (isset($_POST['Subtotal'])) ? $_POST['Subtotal'] : '';
 //$total= (isset($_POST['Total'])) ? $_POST['Total'] : '';
 $id= (isset($_POST['ID'])) ? $_POST['ID'] : '';//se recibe el ultimo id de la tabla factura
+$idOrig=$id;
 $id=$id+1;//se le suma uno para el futuro registro en la tabla detallesfacturas
 $array_string=implode(" ",$array);//Se convierte el array en un string (cadena de caracteres)
 $array_with_ID=str_replace('ID',$id,$array_string);//se reemplaza el id en la cadena por el nuevo
@@ -20,7 +21,7 @@ if($subtotal==0){
     $est_dat='ERROR';
 }else{
 $est_dat = "START TRANSACTION;
-INSERT INTO facturas(fact_nombre,fact_fecha,fact_subtotal,fact_iva,fact_total) VALUES ('$nombre','$fecha','$subtotal',0,'$subtotal');
+INSERT INTO facturas(facturas_pk,fact_nombre,fact_fecha,fact_subtotal,fact_iva,fact_total) VALUES ('$idOrig','$nombre','$fecha','$subtotal',0,'$subtotal');
 $array_with_ID
 COMMIT;";//estructura de los datos que se mandaran en la transaccion
 //muy importante ya que podría afectar a la funcionalidad completamente
