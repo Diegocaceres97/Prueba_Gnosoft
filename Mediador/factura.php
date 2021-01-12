@@ -21,7 +21,7 @@ if($subtotal==0){
     $est_dat='ERROR';
 }else{
 $est_dat = "START TRANSACTION;
-INSERT INTO facturas(fact_nombre,fact_fecha,fact_subtotal,fact_iva,fact_total) VALUES ($nombre','$fecha','$subtotal',0,'$subtotal');
+INSERT INTO facturas(fact_nombre,fact_fecha,fact_subtotal,fact_iva,fact_total) VALUES ('$nombre','$fecha','$subtotal',0,'$subtotal');
 $array_with_ID
 COMMIT;";//estructura de los datos que se mandaran en la transaccion
 //muy importante ya que podría afectar a la funcionalidad completamente
