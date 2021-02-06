@@ -73,7 +73,7 @@
 <!--Sweetalert2-->
 <script src="../Fachada/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!--Codigo custom-->
-<script src="../Webservice/prod_main.js"></script>
+<script src="../Webservice/prod_main.js" async ></script>
 <!--Para generar excel scripts necesarios-->
     <script type="text/javascript" src="../Fachada/jszip.js"></script>
     <script type="text/javascript" src="../Fachada/FileSaver.js"></script>
