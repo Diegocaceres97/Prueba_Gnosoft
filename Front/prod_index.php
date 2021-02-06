@@ -11,7 +11,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <title>Productos</title>
     <!--Css custom-->
-    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
 <header>
@@ -28,6 +28,7 @@
 <h5>Total productos: <span class="badge badge-success">{{totalproductos}}</span></h5>
 </div>
 </div>
+<input type="text" v-model="search" placeholder="buscar" class="busquedad">
 <div class="row mt-5" id="tabla">
 <div class="col-lg-12">
     <table class="table table-striped" id="Tabla"> <!--Stripped muestra une efecto entre filas-->
@@ -42,7 +43,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="(prod,indice) of productos">
+    <tr v-for="prod in filteredProductos">
     <td>{{prod.prod_nombre}}</td>
     <td>{{prod.prod_cantidad}}</td>
     <td>{{prod.prod_precio}}</td>

@@ -7,6 +7,7 @@ var appProductos = new Vue({
   data: {
     productos: [],
     totalF: 0,
+    search:''
   },
   methods: { 
     btnBorrar: function (id) {
@@ -83,6 +84,13 @@ var appProductos = new Vue({
     this.listarproductos();
   },
   computed: {
+    filteredProductos:function(){
+      return this.productos.filter((producto)=>{
+        let com = producto.prod_nombre.toLowerCase();
+        let search = this.search.toLowerCase();
+        return com.match(search)//Función para poder buscar y traer el producto
+      })//solicitado por el nombre
+    },
     totalproductos() {
       this.totalF = 0;
       for (producto of this.productos) {

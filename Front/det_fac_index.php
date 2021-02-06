@@ -64,7 +64,7 @@
 <!--Sweetalert2-->
 <script src="../Fachada/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!--Codigo custom-->
-<script src="../Webservice/deta_fact_main.js"></script>
+<script src="../Webservice/deta_fact_main.js" async></script>
    
 </body>
 </html>
