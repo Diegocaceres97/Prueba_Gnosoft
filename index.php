@@ -25,7 +25,7 @@
 <div class="col">
 <button @click="btnAlta" class="btn btn-success" title="Nuevo"><i class="fas fa-plus-circle fa-2xs"></i> </button>
 <button @click="btnNP" class="btn btn-success" title="Agregar producto"><i class="fab fa-product-hunt"></i> </button>
-<button @click="btnVer(0)" class="btn btn-success" title="Ver productos">Ver productos </button>
+<button @click="btnVer(0)" class="btn btn-success" title="Ver productos" defer>Ver productos </button>
 </div>
 <div class="col text-right">
 <h5>Total facturas: <span class="badge badge-success">{{totalFactura}}</span></h5>

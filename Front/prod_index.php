@@ -39,7 +39,7 @@
 <paginate-links for="product"></paginate-links>-->
 <div class="row mt-5" id="tabla">
 <div class="col-lg-12">
-    <table class="table table-striped" id="Tabla"> <!--Stripped muestra une efecto entre filas-->
+    <table class="table table-striped" id="Tabla" type="hidden" > <!--Stripped muestra une efecto entre filas-->
     <thead>
     <tr>
     <th>Nombre</th>

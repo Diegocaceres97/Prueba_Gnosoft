@@ -6,35 +6,34 @@ var subtotal = 0;
 var appProductos = new Vue({
   el: "#appFacturas",
   data: {
-    productos: [],
+    productos: [], //Aquí almacenaremos los productos de nuestra BD
     totalF: 0,
-    search:'',
-    elementosporPagina:10,
+    search:'', //Variable para las busquedas
+    elementosporPagina:10,//Serie de variables para la paginación
     datosPaginados:[],
     paginaActual:1
   },
-  mounted(){
+  mounted(){ //Carga inicial Core de vue para cuando carga dicha página
     this.getDataPagina(1);
   },
   methods: { 
-    totalPaginas(){
-    return Math.ceil(this.productos.length / this.elementosporPagina);
+    totalPaginas(){//Serie de funciones que nos ayudaran por medio de paginate de VUE a llevar un ordenamiento (de 10 por pagina en este caso)
+    return Math.ceil(this.productos.length / this.elementosporPagina);//con estetica de nuestros datos mostrados en tabla
     },
     getDataPagina(noPagina){
       this.listarproductos();
-      setTimeout(() => {
-        this.paginaActual = noPagina;
+     //Tocó implementar el setTimeOut debido a que no cargaba la lista en la tabla apenas entraba uno
+     setTimeout(() => {
+      this.paginaActual = noPagina;
       this.datosPaginados = [];
     let ini = (noPagina * this.elementosporPagina)-this.elementosporPagina;
     let fin = (noPagina * this.elementosporPagina);
     // for (let index = ini; index < fin; index++) {
     //   this.datosPaginados.push(this.productos[index]); 
     // }
-    this.datosPaginados = this.productos.slice(ini,fin);
-    //alert(this.productos);
-      }, 100);
-      
-   
+    this.datosPaginados = this.productos.slice(ini,fin); //Mostrará los productos en dicha página que estemos ubicados, llevandolos por orden
+    //10-20-30 -> 10-20, 20-30.. en este caso seria así
+     }, 600);
     },
     getPreviousPage(){
     if(this.paginaActual > 1){
