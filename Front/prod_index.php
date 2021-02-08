@@ -10,6 +10,8 @@
    <!--Font awesome-->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <title>Productos</title>
+    <!--Paginate
+    <script src="https://unpkg.com/vuejs-paginate@latest"></script>-->
     <!--Css custom-->
     <link rel="stylesheet" href="main.css">
 </head>
@@ -29,6 +31,12 @@
 </div>
 </div>
 <input type="text" v-model="search" placeholder="buscar" class="busquedad">
+<!--<paginate name="product" :list="productos" :per="2">
+    <li v-for="products in paginated('product')">
+        {{ products }}
+    </li>
+</paginate>
+<paginate-links for="product"></paginate-links>-->
 <div class="row mt-5" id="tabla">
 <div class="col-lg-12">
     <table class="table table-striped" id="Tabla"> <!--Stripped muestra une efecto entre filas-->
@@ -59,6 +67,13 @@
     </tr>
     </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#" v-on:click="getPreviousPage()">Previous</a></li>
+    <li v-for="pagina in totalPaginas()" class="page-item" v-on:click="getDataPagina(pagina)"><a class="page-link" href="#">{{pagina}}</a></li>
+    <li class="page-item"><a class="page-link" href="#" v-on:click="getNextPage()">Next</a></li>
+  </ul>
+</nav>
 </div>
 </div>
 </div>

@@ -1,3 +1,4 @@
+
 var url = "../DAO/facturadetallesDAO.php";
 var url_pro = "../DAO/productosDAO.php";
 const array = new Array();
@@ -7,9 +8,46 @@ var appProductos = new Vue({
   data: {
     productos: [],
     totalF: 0,
-    search:''
+    search:'',
+    elementosporPagina:10,
+    datosPaginados:[],
+    paginaActual:1
+  },
+  mounted(){
+    this.getDataPagina(1);
   },
   methods: { 
+    totalPaginas(){
+    return Math.ceil(this.productos.length / this.elementosporPagina);
+    },
+    getDataPagina(noPagina){
+      this.listarproductos();
+      setTimeout(() => {
+        this.paginaActual = noPagina;
+      this.datosPaginados = [];
+    let ini = (noPagina * this.elementosporPagina)-this.elementosporPagina;
+    let fin = (noPagina * this.elementosporPagina);
+    // for (let index = ini; index < fin; index++) {
+    //   this.datosPaginados.push(this.productos[index]); 
+    // }
+    this.datosPaginados = this.productos.slice(ini,fin);
+    //alert(this.productos);
+      }, 100);
+      
+   
+    },
+    getPreviousPage(){
+    if(this.paginaActual > 1){
+      this.paginaActual--;
+    }
+    this.getDataPagina(this.paginaActual);
+    },
+    getNextPage(){
+      if(this.paginaActual < this.totalPaginas()){
+        this.paginaActual++;
+      }
+      this.getDataPagina(this.paginaActual);
+      },
     btnBorrar: function (id) {
     Swal.fire({
       title: "¿Está seguro de borrar el registro: " + id + " ?",
@@ -54,10 +92,10 @@ var appProductos = new Vue({
     //Procedimiento para listar
     listarproductos: function () {
      // let id = obtenerID_URL(window.location.href);
-     
       axios.post(url_pro, { opcion: 4 }).then((response) => {
         this.productos = response.data;
         console.log(this.productos);
+        //var nuewData = {...this.productos,paginate: ['people']};
       });
     
     },
@@ -81,11 +119,17 @@ var appProductos = new Vue({
         },
   },
   created: function () {
-    this.listarproductos();
+    
   },
   computed: {
     filteredProductos:function(){
-      return this.productos.filter((producto)=>{
+      let valor;
+    if(this.search ==""){
+      valor = this.datosPaginados;
+    }else{
+      valor = this.productos;
+    }
+      return valor.filter((producto)=>{
         let com = producto.prod_nombre.toLowerCase();
         let search = this.search.toLowerCase();
         return com.match(search)//Función para poder buscar y traer el producto

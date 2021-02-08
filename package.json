@@ -20,7 +20,6 @@
     "url": "https://github.com/Diegocaceres97/Prueba_Gnosoft/issues"
   },
   "homepage": "https://github.com/Diegocaceres97/Prueba_Gnosoft#readme",
-  "devDependencies": {},
   "dependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
@@ -37,6 +36,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "core-js": "^3.7.0",
     "regenerator-runtime": "^0.13.7",
+    "vue-paginate": "^3.6.0",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0"
   }
