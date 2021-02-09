@@ -14,8 +14,8 @@
     <script src="https://unpkg.com/vuejs-paginate@latest"></script>-->
     <!--Css custom-->
     <link rel="stylesheet" href="main.css">
-    <!--SheetJs-->
-    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <!--SheetJs
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>-->
 </head>
 <body>
 <header>
