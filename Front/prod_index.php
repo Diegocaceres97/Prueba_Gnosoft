@@ -14,6 +14,8 @@
     <script src="https://unpkg.com/vuejs-paginate@latest"></script>-->
     <!--Css custom-->
     <link rel="stylesheet" href="main.css">
+    <!--SheetJs-->
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 <header>
@@ -23,8 +25,8 @@
 <div class="container">
 <div class="row">
 <div class="col">
-<button onclick="Generarexcel('tabla')" class="btn btn-success" title="Imprimir"><i class="fas fa-print"></i> </button>
-<button class="btn btn-success" id="generar-excel" title="Generar excel"><i class="fas fa-file-csv"></i> </button>
+<button onclick="imprimir('tabla')" class="btn btn-success" title="Imprimir"><i class="fas fa-print"></i> </button>
+<button class="btn btn-success" id="generar-excel" title="Generar excel" @click="generarSheetandBook()"><i class="fas fa-file-csv"></i> </button>
 </div>
 <div class="col text-right">
 <h5>Total productos: <span class="badge badge-success">{{totalproductos}}</span></h5>
@@ -39,7 +41,7 @@
 <paginate-links for="product"></paginate-links>-->
 <div class="row mt-5" id="tabla">
 <div class="col-lg-12">
-    <table class="table table-striped" id="Tabla" type="hidden" > <!--Stripped muestra une efecto entre filas-->
+    <table class="table table-striped" id="Tabla" > <!--Stripped muestra une efecto entre filas-->
     <thead>
     <tr>
     <th>Nombre</th>
@@ -78,8 +80,9 @@
 </div>
 </div>
 </div>
-<!--Jquery,Popper.js, bootstrap.js-->
-<script src="../Fachada/jquery/jquery-3.5.1.min.js"></script>
+<!--Jquery,Popper.js, bootstrap.js-
+<script src="../Fachada/jquery/jquery-3.5.1.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="../Fachada/bootstrap/dist/js/bootstrap.min.js"></script>
 <!--Vue JS-->
@@ -90,9 +93,11 @@
 <script src="../Fachada/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!--Codigo custom-->
 <script src="../Webservice/prod_main.js" async ></script>
-<!--Para generar excel scripts necesarios-->
+<!--Para generar excel scripts necesarios
     <script type="text/javascript" src="../Fachada/jszip.js"></script>
     <script type="text/javascript" src="../Fachada/FileSaver.js"></script>
     <script type="text/javascript" src="../Fachada/excel-gen.js"></script>
+    -->
+
 </body>
 </html>
