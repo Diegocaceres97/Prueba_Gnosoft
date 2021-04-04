@@ -4,6 +4,7 @@
 <head >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="theme-color" content="#FFFFFF"/>
     <title>ANGELNAILS</title>
     <!--Bootstrap css-->
     <link rel="stylesheet" href="Fachada/bootstrap/dist/css/bootstrap.min.css">
@@ -11,7 +12,8 @@
    <link rel="stylesheet" href="Fachada/plugins/sweetalert2/sweetalert2.min.css">
    <!--Font awesome-->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-    
+    <!--Manifesto-->
+    <link rel="manifest" href="manifest.json">
     <!--Css custom-->
     <link rel="stylesheet" href="main.css">
 </head>
@@ -84,6 +86,8 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--Sweetalert2-->
 <script src="Fachada/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!--ServiceWorker-->
+<script src="./src/main.js"></script>
 <!--Codigo custom-->
 <script src="Webservice/fact_main.js"></script>
    
