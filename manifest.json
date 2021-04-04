@@ -1,7 +1,7 @@
 {
     "name": "AngelNails",
-    "short_name":"AN",
-    "start_url":"/Prueba_Gnosoft/index.php",
+    "short_name":"AngelNails",
+    "start_url":"/index.php",
     "icons":[
         {
             "src": "icons/manifest-icon-192.png",
